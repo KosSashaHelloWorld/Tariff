@@ -1,3 +1,0 @@
-01 Dec 2021 20:06 [main] INFO TariffBuilder.<init> - TariffBuilder initialized
-01 Dec 2021 20:06 [main] INFO Operator.addTariff - Tariff{name:Fast, operator:Operator{name:MTC, country:Belarus}} added to Operator{name:MTC, country:Belarus}
-01 Dec 2021 20:06 [main] INFO Tariff.<init> - Tariff{name:Fast, operator:Operator{name:MTC, country:Belarus}} was created
