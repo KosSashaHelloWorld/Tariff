@@ -1,0 +1,2 @@
+01 Dec 2021 19:58 [main] INFO TariffBuilder.<init> - TariffBuilder initialized
+01 Dec 2021 19:58 [main] INFO Tariff.<init> - Tariff{name:Fast, operator:edu.kosolobov.task2.entity.Operator@338c99c8} was created
