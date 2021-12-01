@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" xmlns="TariffSchema.xsd"?>
+<Tariffs>
+    <tariff start="12-2-2021" type="ROAMING_ONLY">
+        <name>Fast</name>
+        <payroll>20.0</payroll>
+        <sms-price>0.2</sms-price>
+        <call-price>1.0</call-price>
+        <home-call-price>1.2</home-call-price>
+        <roaming-call-price>5.0</roaming-call-price>
+        <parameters>
+            <unlimited-internet>false</unlimited-internet>
+            <unlimited-calls>false</unlimited-calls>
+            <unlimited-sms>false</unlimited-sms>
+            <roaming>false</roaming>
+        </parameters>
+        <operator>
+            <name>MTC</name>
+            <country>Belarus</country>
+        </operator>
+    </tariff>
+    <tariff start="12-14-2021" end="12-14-2022" type="INTERNET">
+        <name>Fast</name>
+        <payroll>10.0</payroll>
+        <sms-price>0.3</sms-price>
+        <call-price>2.0</call-price>
+        <home-call-price>2.2</home-call-price>
+        <roaming-call-price>4.0</roaming-call-price>
+        <parameters>
+            <unlimited-internet>false</unlimited-internet>
+            <unlimited-calls>false</unlimited-calls>
+            <unlimited-sms>false</unlimited-sms>
+            <roaming>false</roaming>
+        </parameters>
+        <operator>
+            <name>MTC</name>
+            <country>Belarus</country>
+        </operator>
+    </tariff>
+</Tariffs>

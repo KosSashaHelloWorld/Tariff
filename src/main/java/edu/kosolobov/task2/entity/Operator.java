@@ -33,7 +33,7 @@ public class Operator {
     }
 
     public List<Tariff> getTariffs() {
-        return tariffs;
+        return tariffs.subList(0, tariffs.size() - 1);
     }
 
     @Override

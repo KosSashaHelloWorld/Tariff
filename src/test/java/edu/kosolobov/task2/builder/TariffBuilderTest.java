@@ -20,8 +20,8 @@ class TariffBuilderTest {
                 .smsPrice(0.2)
                 .callPrice(1.0)
                 .homeCallPrice(1.2)
-                .outdoorCallPrice(5.0)
-                .parameters(Parameters.getParameters(Parameters.ROAMING))
+                .roamingCallPrice(5.0)
+                .parameters(Parameters.getParameters(Parameters.ROAMING_ONLY))
                 .build();
 
         assertNotNull(tariff);

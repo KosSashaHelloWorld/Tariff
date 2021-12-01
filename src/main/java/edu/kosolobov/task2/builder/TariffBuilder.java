@@ -47,7 +47,7 @@ public class TariffBuilder {
         return this;
     }
 
-    public TariffBuilder outdoorCallPrice(double outdoorCallPrice) {
+    public TariffBuilder roamingCallPrice(double outdoorCallPrice) {
         this.outdoorCallPrice = outdoorCallPrice;
         return this;
     }

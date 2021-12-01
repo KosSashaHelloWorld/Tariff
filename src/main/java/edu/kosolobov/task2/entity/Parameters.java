@@ -3,15 +3,13 @@ package edu.kosolobov.task2.entity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Objects;
-
 public class Parameters {
     private static final Logger log = LogManager.getLogger(Parameters.class);
     public static final int DEFAULT = 0;
     public static final int INTERNET = 1;
     public static final int SMS_CALL = 2;
     public static final int FULL = 3;
-    public static final int ROAMING = 4;
+    public static final int ROAMING_ONLY = 4;
     private final boolean unlimitedInternet;
     private final boolean unlimitedCalls;
     private final boolean unlimitedSMS;

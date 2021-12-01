@@ -11,7 +11,7 @@ public class Tariff {
     private final double payroll;
     private final double callPrice;
     private final double homeCallPrice;
-    private final double outdoorCallPrice;
+    private final double roamingCallPrice;
     private final double smsPrice;
     private final Parameters parameters;
 
@@ -20,7 +20,7 @@ public class Tariff {
                   double payroll,
                   double callPrice,
                   double homeCallPrice,
-                  double outdoorCallPrice,
+                  double roamingCallPrice,
                   double smsPrice,
                   Parameters parameters) {
         this.name = name;
@@ -28,7 +28,7 @@ public class Tariff {
         this.payroll = payroll;
         this.callPrice = callPrice;
         this.homeCallPrice = homeCallPrice;
-        this.outdoorCallPrice = outdoorCallPrice;
+        this.roamingCallPrice = roamingCallPrice;
         this.smsPrice = smsPrice;
         this.parameters = parameters;
 
@@ -57,8 +57,8 @@ public class Tariff {
         return homeCallPrice;
     }
 
-    public double getOutdoorCallPrice() {
-        return outdoorCallPrice;
+    public double getRoamingCallPrice() {
+        return roamingCallPrice;
     }
 
     public double getSmsPrice() {
@@ -76,7 +76,7 @@ public class Tariff {
         result = result * prime + payroll;
         result = result * prime + callPrice;
         result = result * prime + homeCallPrice;
-        result = result * prime + outdoorCallPrice;
+        result = result * prime + roamingCallPrice;
         result = result * prime + smsPrice;
         for (char c : name.toCharArray()) {
             result += c;
@@ -94,7 +94,7 @@ public class Tariff {
         return Double.compare(tariff.payroll, payroll) == 0 &&
                 Double.compare(tariff.callPrice, callPrice) == 0 &&
                 Double.compare(tariff.homeCallPrice, homeCallPrice) == 0 &&
-                Double.compare(tariff.outdoorCallPrice, outdoorCallPrice) == 0 &&
+                Double.compare(tariff.roamingCallPrice, roamingCallPrice) == 0 &&
                 Double.compare(tariff.smsPrice, smsPrice) == 0 &&
                 name.equals(tariff.name) &&
                 operator.equals(tariff.operator) &&
