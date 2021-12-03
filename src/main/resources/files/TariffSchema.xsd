@@ -1,69 +1,91 @@
-<xs:schema elementFormDefault="qualified"
-           xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <xs:element name="Tariffs">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="tariff" maxOccurs="unbounded" minOccurs="0">
-                    <xs:complexType>
-                        <xs:all>
-                            <xs:element type="xs:string" name="name"/>
-                            <xs:element name="payroll" type="doubleArg"/>
-                            <xs:element name="internet-1mb-price" type="doubleArg"/>
-                            <xs:element name="inside-call-price" type="doubleArg"/>
-                            <xs:element name="outside-call-price" type="doubleArg"/>
-                            <xs:element name="favorite-call-price" type="doubleArg"/>
-                            <xs:element name="home-call-price" type="doubleArg"/>
-                            <xs:element name="sms-price" type="doubleArg"/>
-                            <xs:element name="roaming-call-price" type="doubleArg"/>
-                            <xs:element name="roaming-sms-price" type="doubleArg"/>
-                            <xs:element name="parameters" type="parametersType"/>
-                            <xs:element name="operator">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="name">
-                                            <xs:simpleType>
-                                                <xs:restriction base="xs:string">
-                                                    <xs:enumeration value="MTC"/>
-                                                    <xs:enumeration value="A1"/>
-                                                    <xs:enumeration value="Life"/>
-                                                    <xs:enumeration value="ByFly"/>
-                                                </xs:restriction>
-                                            </xs:simpleType>
-                                        </xs:element>
-                                        <xs:element name="country">
-                                            <xs:simpleType>
-                                                <xs:restriction base="xs:string">
-                                                    <xs:enumeration value="Belarus"/>
-                                                    <xs:enumeration value="Russia"/>
-                                                    <xs:enumeration value="USA"/>
-                                                    <xs:enumeration value="Ukraine"/>
-                                                </xs:restriction>
-                                            </xs:simpleType>
-                                        </xs:element>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:all>
-                        <xs:attribute type="xs:date" name="start" use="required"/>
-                        <xs:attribute type="xs:duration" name="duration"/>
-                        <xs:attribute type="xs:ID" name="id" use="required"/>
-                    </xs:complexType>
-                </xs:element>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+<schema elementFormDefault="qualified"
+           targetNamespace="TariffSchema.xsd"
+           xmlns="http://www.w3.org/2001/XMLSchema">
+    <element name="Tariffs">
+        <complexType>
+            <sequence>
+                <element name="tariff" maxOccurs="unbounded" minOccurs="0">
+                    <complexType>
+                        <sequence>
+                            <element type="string" name="name"/>
+                            <element name="payroll" type="PriceType"/>
+                            <element name="internet-1mb-price" type="PriceType"/>
+                            <element name="inside-call-price" type="PriceType"/>
+                            <element name="outside-call-price" type="PriceType"/>
+                            <element name="favorite-call-price" type="PriceType"/>
+                            <element name="home-call-price" type="PriceType"/>
+                            <element name="sms-price" type="PriceType"/>
+                            <element name="roaming-call-price" type="PriceType"/>
+                            <element name="roaming-sms-price" type="PriceType"/>
+                            <element name="parameters" type="ParametersType"/>
+                            <element name="operator">
+                                <complexType>
+                                    <sequence>
+                                        <element name="name">
+                                            <simpleType>
+                                                <restriction base="string">
+                                                    <enumeration value="MTC"/>
+                                                    <enumeration value="A1"/>
+                                                    <enumeration value="Life"/>
+                                                    <enumeration value="ByFly"/>
+                                                </restriction>
+                                            </simpleType>
+                                        </element>
+                                        <element name="country">
+                                            <simpleType>
+                                                <restriction base="string">
+                                                    <enumeration value="Belarus"/>
+                                                    <enumeration value="Russia"/>
+                                                    <enumeration value="USA"/>
+                                                    <enumeration value="Ukraine"/>
+                                                </restriction>
+                                            </simpleType>
+                                        </element>
+                                    </sequence>
+                                </complexType>
+                            </element>
+                        </sequence>
+                        <attribute type="date" name="start" use="required"/>
+                        <attribute type="duration" name="duration"/>
+                        <attribute type="ID" name="id" use="required"/>
+                    </complexType>
+                </element>
+            </sequence>
+        </complexType>
+    </element>
 
-    <xs:complexType name="parametersType">
-        <xs:sequence>
-            <xs:element type="xs:int" name="tarification_minutes" default="1"/>
-            <xs:element type="xs:long" name="favorite_number" minOccurs="0" maxOccurs="5"/>
-        </xs:sequence>
-    </xs:complexType>
+    <complexType name="ParametersType">
+        <sequence>
+            <element type="int" name="tarification_minutes" default="1"/>
+            <element type="long" name="favorite_number" minOccurs="0" maxOccurs="5"/>
+        </sequence>
+    </complexType>
 
-    <xs:simpleType name="doubleArg">
-        <xs:restriction base="xs:double">
-            <xs:minInclusive value="0.0"/>
-            <xs:maxExclusive value="100000.0"/>
-        </xs:restriction>
-    </xs:simpleType>
-</xs:schema>
+    <complexType name="PromotionType">
+        <complexContent>
+            <extension base="PriceType">
+                <sequence>
+                    <element name="Promotion" type="PercentageType"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <simpleType name="PriceType">
+        <restriction base="double">
+            <minInclusive value="0.0"/>
+            <maxExclusive value="100000.0"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="PercentageType">
+        <restriction base="double">
+            <minInclusive value="0.0"/>
+            <maxExclusive value="1.0"/>
+        </restriction>
+    </simpleType>
+
+    <element name="AbstractPrice" abstract="true" type="PriceType"/>
+    <element name="Price" substitutionGroup="AbstractPrice" type="PriceType"/>
+    <element name="PromotionPrice" substitutionGroup="AbstractPrice" type="PromotionType"/>
+</schema>
