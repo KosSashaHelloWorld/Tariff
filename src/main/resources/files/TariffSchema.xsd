@@ -8,20 +8,15 @@
                         <xs:all>
                             <xs:element type="xs:string" name="name"/>
                             <xs:element name="payroll" type="doubleArg"/>
-                            <xs:element name="sms-price" type="doubleArg" minOccurs="0"/>
-                            <xs:element name="call-price" type="doubleArg" minOccurs="0"/>
-                            <xs:element name="home-call-price" type="doubleArg" minOccurs="0"/>
-                            <xs:element name="roaming-call-price" type="doubleArg" minOccurs="0"/>
-                            <xs:element name="parameters" minOccurs="0">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element type="xs:boolean" name="unlimited-internet" default="false"/>
-                                        <xs:element type="xs:boolean" name="unlimited-calls" default="false"/>
-                                        <xs:element type="xs:boolean" name="unlimited-sms" default="false"/>
-                                        <xs:element type="xs:boolean" name="roaming" default="false"/>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
+                            <xs:element name="internet-1mb-price" type="doubleArg"/>
+                            <xs:element name="inside-call-price" type="doubleArg"/>
+                            <xs:element name="outside-call-price" type="doubleArg"/>
+                            <xs:element name="favorite-call-price" type="doubleArg"/>
+                            <xs:element name="home-call-price" type="doubleArg"/>
+                            <xs:element name="sms-price" type="doubleArg"/>
+                            <xs:element name="roaming-call-price" type="doubleArg"/>
+                            <xs:element name="roaming-sms-price" type="doubleArg"/>
+                            <xs:element name="parameters" type="parametersType"/>
                             <xs:element name="operator">
                                 <xs:complexType>
                                     <xs:sequence>
@@ -49,28 +44,26 @@
                                 </xs:complexType>
                             </xs:element>
                         </xs:all>
-                        <xs:attribute type="tariff-mode" name="type"/>
                         <xs:attribute type="xs:date" name="start" use="required"/>
-                        <xs:attribute type="xs:date" name="end"/>
+                        <xs:attribute type="xs:duration" name="duration"/>
+                        <xs:attribute type="xs:ID" name="id" use="required"/>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <xs:simpleType name="tariff-mode">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="DEFAULT"/>
-            <xs:enumeration value="INTERNET"/>
-            <xs:enumeration value="SMS_CALL"/>
-            <xs:enumeration value="FULL"/>
-            <xs:enumeration value="ROAMING_ONLY"/>
-        </xs:restriction>
-    </xs:simpleType>
+    <xs:complexType name="parametersType">
+        <xs:sequence>
+            <xs:element type="xs:int" name="tarification_minutes" default="1"/>
+            <xs:element type="xs:long" name="favorite_number" minOccurs="0" maxOccurs="5"/>
+        </xs:sequence>
+    </xs:complexType>
 
     <xs:simpleType name="doubleArg">
         <xs:restriction base="xs:double">
             <xs:minInclusive value="0.0"/>
+            <xs:maxExclusive value="100000.0"/>
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>
