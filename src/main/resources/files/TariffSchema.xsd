@@ -46,9 +46,9 @@
                                 </complexType>
                             </element>
                         </sequence>
-                        <attribute type="dateTime" name="start" use="required"/>
+                        <attribute type="dateTime" name="start" use="required" default="2000-01-01T00:00:00"/>
                         <attribute type="dateTime" name="end"/>
-                        <attribute type="ID" name="id" use="required"/>
+                        <attribute type="ID" name="id" use="required" default="tar0"/>
                     </complexType>
                 </element>
             </sequence>

@@ -1,7 +1,7 @@
 package edu.kosolobov.task2.parser;
 
 import edu.kosolobov.task2.entity.Tariff;
-import edu.kosolobov.task2.reader.FileReader;
+import edu.kosolobov.task2.reader.TariffFileReader;
 import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXException;
 
@@ -16,7 +16,7 @@ class TariffDOMParserTest {
 
     @Test
     void parse() throws ParserConfigurationException, IOException, SAXException {
-        FileReader reader = new FileReader();
+        TariffFileReader reader = new TariffFileReader();
         TariffDOMParser parser = new TariffDOMParser();
 
         String filePath = "files/TariffsExample.xml";
