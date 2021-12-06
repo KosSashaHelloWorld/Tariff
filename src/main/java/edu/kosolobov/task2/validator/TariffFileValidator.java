@@ -41,7 +41,7 @@ public class TariffFileValidator {
         Validator validator = schema.newValidator();
         validator.validate(source);
 
-        log.log(Level.INFO, "File {} is valid", filePath);
+        log.log(Level.INFO, "File {} is valid", fileUrl.getPath());
         return true;
     }
 
