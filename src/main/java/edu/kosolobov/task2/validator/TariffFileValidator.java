@@ -7,10 +7,10 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.net.URL;
-public class FileValidator {
+public class TariffFileValidator {
     private static final Logger log = LogManager.getLogger();
 
-    private FileValidator() {
+    private TariffFileValidator() {
     }
 
     public static boolean isValid(String filePath) {

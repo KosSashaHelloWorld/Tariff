@@ -1,27 +1,28 @@
 <schema elementFormDefault="qualified"
-           targetNamespace="TariffSchema.xsd"
-           xmlns="http://www.w3.org/2001/XMLSchema">
+        targetNamespace="http://www.example.com/TariffSchema.xsd"
+        xmlns:t="http://www.example.com/TariffSchema.xsd"
+        xmlns="http://www.w3.org/2001/XMLSchema">
     <element name="Tariffs">
         <complexType>
             <sequence>
-                <element name="tariff" maxOccurs="unbounded" minOccurs="0">
+                <element name="tariff" maxOccurs="unbounded">
                     <complexType>
                         <sequence>
-                            <element type="string" name="name"/>
-                            <element name="payroll" type="PriceType"/>
-                            <element name="internet-1mb-price" type="PriceType"/>
-                            <element name="inside-call-price" type="PriceType"/>
-                            <element name="outside-call-price" type="PriceType"/>
-                            <element name="favorite-call-price" type="PriceType"/>
-                            <element name="home-call-price" type="PriceType"/>
-                            <element name="sms-price" type="PriceType"/>
-                            <element name="roaming-call-price" type="PriceType"/>
-                            <element name="roaming-sms-price" type="PriceType"/>
-                            <element name="parameters" type="ParametersType"/>
+                            <element name="tariff-name" type="string"/>
+                            <element name="payroll" type="t:PriceType"/>
+                            <element name="internet-1mb-price" type="t:PriceType"/>
+                            <element name="inside-call-price" type="t:PriceType"/>
+                            <element name="outside-call-price" type="t:PriceType"/>
+                            <element name="favorite-call-price" type="t:PriceType"/>
+                            <element name="home-call-price" type="t:PriceType"/>
+                            <element name="sms-price" type="t:PriceType"/>
+                            <element name="roaming-call-price" type="t:PriceType"/>
+                            <element name="roaming-sms-price" type="t:PriceType"/>
+                            <element name="parameters" type="t:ParametersType"/>
                             <element name="operator">
                                 <complexType>
                                     <sequence>
-                                        <element name="name">
+                                        <element name="operator-name">
                                             <simpleType>
                                                 <restriction base="string">
                                                     <enumeration value="MTC"/>
@@ -45,8 +46,8 @@
                                 </complexType>
                             </element>
                         </sequence>
-                        <attribute type="date" name="start" use="required"/>
-                        <attribute type="duration" name="duration"/>
+                        <attribute type="dateTime" name="start" use="required"/>
+                        <attribute type="dateTime" name="end"/>
                         <attribute type="ID" name="id" use="required"/>
                     </complexType>
                 </element>
@@ -56,36 +57,28 @@
 
     <complexType name="ParametersType">
         <sequence>
-            <element type="int" name="tarification_minutes" default="1"/>
-            <element type="long" name="favorite_number" minOccurs="0" maxOccurs="5"/>
+            <element type="t:TarificationTimeType" name="tarification_minutes"/>
+            <element type="t:PhoneNumberType" name="favorite_number" minOccurs="0" maxOccurs="5"/>
         </sequence>
     </complexType>
 
-    <complexType name="PromotionType">
-        <complexContent>
-            <extension base="PriceType">
-                <sequence>
-                    <element name="Promotion" type="PercentageType"/>
-                </sequence>
-            </extension>
-        </complexContent>
-    </complexType>
-
     <simpleType name="PriceType">
-        <restriction base="double">
+        <restriction base="float">
             <minInclusive value="0.0"/>
             <maxExclusive value="100000.0"/>
         </restriction>
     </simpleType>
 
-    <simpleType name="PercentageType">
+    <simpleType name="TarificationTimeType">
         <restriction base="double">
-            <minInclusive value="0.0"/>
-            <maxExclusive value="1.0"/>
+            <minInclusive value="0.2"/>
+            <maxExclusive value="10"/>
         </restriction>
     </simpleType>
 
-    <element name="AbstractPrice" abstract="true" type="PriceType"/>
-    <element name="Price" substitutionGroup="AbstractPrice" type="PriceType"/>
-    <element name="PromotionPrice" substitutionGroup="AbstractPrice" type="PromotionType"/>
+    <simpleType name="PhoneNumberType">
+        <restriction base="string">
+            <pattern value="[+]\d{1,3}[(]\d{2}[)]\d{3}[-]\d{2}[-]\d{2}"/>
+        </restriction>
+    </simpleType>
 </schema>

@@ -4,85 +4,76 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class Tariff {
     private static final Logger log = LogManager.getLogger(Tariff.class);
+    private final LocalDateTime startDate;
+    private final LocalDateTime endDate;
+    private final String id;
     private final String name;
-    private final Operator operator;
     private final double payroll;
-    private final double callPrice;
+    private final double internet1MBPrice;
+    private final double insideCallPrice;
+    private final double outsideCallPrice;
+    private final double favoriteCallPrice;
     private final double homeCallPrice;
-    private final double roamingCallPrice;
     private final double smsPrice;
+    private final double roamingCallPrice;
+    private final double roamingSmsPrice;
+    private final Operator operator;
     private final Parameters parameters;
 
-    public Tariff(String name,
-                  Operator operator,
+    public Tariff(LocalDateTime startDate,
+                  LocalDateTime endDate,
+                  String id,
+                  String name,
                   double payroll,
-                  double callPrice,
+                  double internet1MBPrice,
+                  double insideCallPrice,
+                  double outsideCallPrice,
+                  double favoriteCallPrice,
                   double homeCallPrice,
-                  double roamingCallPrice,
                   double smsPrice,
+                  double roamingCallPrice,
+                  double roamingSmsPrice,
+                  Operator operator,
                   Parameters parameters) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.id = id;
         this.name = name;
-        this.operator = operator;
         this.payroll = payroll;
-        this.callPrice = callPrice;
+        this.internet1MBPrice = internet1MBPrice;
+        this.insideCallPrice = insideCallPrice;
+        this.outsideCallPrice = outsideCallPrice;
+        this.favoriteCallPrice = favoriteCallPrice;
         this.homeCallPrice = homeCallPrice;
-        this.roamingCallPrice = roamingCallPrice;
         this.smsPrice = smsPrice;
+        this.roamingCallPrice = roamingCallPrice;
+        this.roamingSmsPrice = roamingSmsPrice;
+        this.operator = operator;
         this.parameters = parameters;
-
-        operator.addTariff(this);
-
         log.log(Level.INFO, "{} was created", this);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Operator getOperator() {
-        return operator;
-    }
-
-    public double getPayroll() {
-        return payroll;
-    }
-
-    public double getCallPrice() {
-        return callPrice;
-    }
-
-    public double getHomeCallPrice() {
-        return homeCallPrice;
-    }
-
-    public double getRoamingCallPrice() {
-        return roamingCallPrice;
-    }
-
-    public double getSmsPrice() {
-        return smsPrice;
-    }
-
-    public Parameters getParameters() {
-        return parameters;
     }
 
     @Override
     public int hashCode() {
-        double prime = 14.2;
+        double prime = 4.2;
         double result = 1;
         result = result * prime + payroll;
-        result = result * prime + callPrice;
+        result = result * prime + insideCallPrice;
+        result = result * prime + insideCallPrice;
+        result = result * prime + outsideCallPrice;
+        result = result * prime + favoriteCallPrice;
+        result = result * prime + insideCallPrice;
         result = result * prime + homeCallPrice;
-        result = result * prime + roamingCallPrice;
         result = result * prime + smsPrice;
-        for (char c : name.toCharArray()) {
-            result += c;
-        }
-        result += operator.hashCode();
+        result = result * prime + roamingCallPrice;
+        result = result * prime + roamingSmsPrice;
         result += parameters.hashCode();
+        result += operator.hashCode();
         return (int) result;
     }
 
@@ -92,17 +83,22 @@ public class Tariff {
         if (o == null || getClass() != o.getClass()) return false;
         Tariff tariff = (Tariff) o;
         return Double.compare(tariff.payroll, payroll) == 0 &&
-                Double.compare(tariff.callPrice, callPrice) == 0 &&
+                Double.compare(tariff.internet1MBPrice, internet1MBPrice) == 0 &&
+                Double.compare(tariff.insideCallPrice, insideCallPrice) == 0 &&
+                Double.compare(tariff.outsideCallPrice, outsideCallPrice) == 0 &&
+                Double.compare(tariff.favoriteCallPrice, favoriteCallPrice) == 0 &&
                 Double.compare(tariff.homeCallPrice, homeCallPrice) == 0 &&
-                Double.compare(tariff.roamingCallPrice, roamingCallPrice) == 0 &&
                 Double.compare(tariff.smsPrice, smsPrice) == 0 &&
-                name.equals(tariff.name) &&
+                Double.compare(tariff.roamingCallPrice, roamingCallPrice) == 0 &&
+                Double.compare(tariff.roamingSmsPrice, roamingSmsPrice) == 0 &&
+                //         id.equals(tariff.id) &&
+                //         name.equals(tariff.name) &&
                 operator.equals(tariff.operator) &&
                 parameters.equals(tariff.parameters);
     }
 
     @Override
     public String toString() {
-        return String.format("Tariff{name:%s, operator:%s}", name, operator);
+        return String.format("Tariff{id:%s, name:%s, operator:%s}", id, name, operator);
     }
 }

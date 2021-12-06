@@ -1,52 +1,31 @@
 package edu.kosolobov.task2.entity;
 
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Parameters {
     private static final Logger log = LogManager.getLogger(Parameters.class);
-    public static final int DEFAULT = 0;
-    public static final int INTERNET = 1;
-    public static final int SMS_CALL = 2;
-    public static final int FULL = 3;
-    public static final int ROAMING_ONLY = 4;
-    private final boolean unlimitedInternet;
-    private final boolean unlimitedCalls;
-    private final boolean unlimitedSMS;
-    private final boolean roaming;
+    private static final String REGEX_PHONE_NUMBER = "[+]\\d{1,3}[(]\\d{2}[)]\\d{3}[-]\\d{2}[-]\\d{2}";
+    private float tarification;
+    private List<String> favoriteNumbers = new ArrayList<>();
 
-    public static Parameters getParameters(int mode) {
-        return switch (mode) {
-            case 0 -> new Parameters(false, false, false, false);
-            case 1 -> new Parameters(true, false, false, false);
-            case 2 -> new Parameters(false, true, true, false);
-            case 3 -> new Parameters(true, true, true, true);
-            case 4 -> new Parameters(false, false, true, true);
-            default -> getParameters(DEFAULT);
-        };
+    public Parameters() {
     }
 
-    private Parameters(boolean unlimitedInternet, boolean unlimitedCalls, boolean unlimitedSMS, boolean roaming) {
-        this.unlimitedInternet = unlimitedInternet;
-        this.unlimitedCalls = unlimitedCalls;
-        this.unlimitedSMS = unlimitedSMS;
-        this.roaming = roaming;
+    public void setTarification(float tarification) {
+        this.tarification = tarification;
     }
 
-    public boolean isUnlimitedInternet() {
-        return unlimitedInternet;
-    }
-
-    public boolean isUnlimitedCalls() {
-        return unlimitedCalls;
-    }
-
-    public boolean isUnlimitedSMS() {
-        return unlimitedSMS;
-    }
-
-    public boolean isRoaming() {
-        return roaming;
+    public void addFavoriteNumber(String favoriteNumber) {
+        if (favoriteNumber.matches(REGEX_PHONE_NUMBER)) {
+            favoriteNumbers.add(favoriteNumber);
+        } else {
+            log.log(Level.WARN, "{} does not match regex {}", favoriteNumber, REGEX_PHONE_NUMBER);
+        }
     }
 
     @Override
@@ -54,22 +33,27 @@ public class Parameters {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Parameters that = (Parameters) o;
-        return unlimitedInternet == that.unlimitedInternet && unlimitedCalls == that.unlimitedCalls && unlimitedSMS == that.unlimitedSMS && roaming == that.roaming;
+        return Float.compare(that.tarification, tarification) == 0
+                && favoriteNumbers.hashCode() == that.favoriteNumbers.hashCode();
     }
 
     @Override
     public int hashCode() {
-        int result = 0;
-        result += unlimitedInternet? 1 : 0;
-        result += unlimitedCalls? 10 : 0;
-        result += unlimitedSMS? 100 : 0;
-        result += roaming? 1000 : 0;
+        float prime = 5.2f;
+        float temp = 1.0f;
+        temp = temp * prime + tarification;
+        int result = (int) temp;
+        for (String number : favoriteNumbers) {
+            for (char aChar : number.toCharArray()) {
+                result += aChar;
+            }
+        }
+
         return result;
     }
 
     @Override
     public String toString() {
-        return String.format("Parameters{unlimited internet:%s, unlimited calls:%s, unlimited sms:%s, roaming:%s}",
-                unlimitedInternet, unlimitedCalls, unlimitedSMS, roaming);
+        return String.format("Parameters{tarification:%.1f, favoriteNumbers: %s}", tarification, favoriteNumbers);
     }
 }

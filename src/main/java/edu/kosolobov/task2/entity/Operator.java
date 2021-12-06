@@ -10,18 +10,10 @@ import java.util.Objects;
 
 public class Operator {
     private static final Logger log = LogManager.getLogger(Operator.class);
-    private final String name;
-    private final String country;
-    private final List<Tariff> tariffs = new ArrayList<>();
+    private String name;
+    private String country;
 
-    public Operator(String name, String country) {
-        this.name = name;
-        this.country = country;
-    }
-
-    public void addTariff(Tariff tariff) {
-        tariffs.add(tariff);
-        log.log(Level.INFO, "{} added to {}", tariff, this);
+    public Operator() {
     }
 
     public String getName() {
@@ -32,8 +24,12 @@ public class Operator {
         return country;
     }
 
-    public List<Tariff> getTariffs() {
-        return tariffs.subList(0, tariffs.size() - 1);
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     @Override
@@ -41,12 +37,18 @@ public class Operator {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Operator operator = (Operator) o;
-        return Objects.equals(name, operator.name) && Objects.equals(country, operator.country) && Objects.equals(tariffs, operator.tariffs);
+        return name.equals(operator.name) && country.equals(operator.country);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, country, tariffs);
+        char[] prime = name.concat(country).toCharArray();
+        int result = 0;
+        for (char i : prime) {
+            result += i;
+        }
+
+        return result;
     }
 
     @Override
