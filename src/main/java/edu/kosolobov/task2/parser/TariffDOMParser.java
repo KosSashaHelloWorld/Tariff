@@ -2,6 +2,7 @@ package edu.kosolobov.task2.parser;
 
 import edu.kosolobov.task2.builder.TariffBuilder;
 import edu.kosolobov.task2.entity.Tariff;
+import edu.kosolobov.task2.validator.TariffFileValidator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,6 +27,8 @@ public class TariffDOMParser {
 
     public List<Tariff> parse(File file) throws ParserConfigurationException, IOException, SAXException {
         List<Tariff> tariffs = new ArrayList<>();
+
+        TariffFileValidator.isValid(file);
 
         Element root = getRootElementFromFactory(file);
 

@@ -42,9 +42,9 @@ public class TariffStAXParser {
                 switch (tagName) {
                     case TARIFF_ELEMENT -> {
                         builder = TariffBuilder.newInstance();
-                        builder.startDate(startElement.getAttributeByName(new QName("start")).getValue());
-                        builder.endDate(startElement.getAttributeByName(new QName("end")).getValue());
-                        builder.id(startElement.getAttributeByName(new QName("id")).getValue());
+                        builder.startDate(startElement.getAttributeByName(new QName(START_ATTRIBUTE)).getValue());
+                        builder.endDate(startElement.getAttributeByName(new QName(END_ATTRIBUTE)).getValue());
+                        builder.id(startElement.getAttributeByName(new QName(ID_ATTRIBUTE)).getValue());
                     }
                     case TARIFF_NAME -> {
                         event = reader.nextEvent();
@@ -56,6 +56,12 @@ public class TariffStAXParser {
                         event = reader.nextEvent();
                         String value = event.asCharacters().getData();
                         builder.payroll(Float.parseFloat(value));
+                        break;
+                    }
+                    case INTERNET -> {
+                        event = reader.nextEvent();
+                        String value = event.asCharacters().getData();
+                        builder.internet1MBPrice(Float.parseFloat(value));
                         break;
                     }
                     case INSIDE_CALL -> {

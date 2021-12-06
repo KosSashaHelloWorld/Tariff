@@ -21,24 +21,20 @@ public class TariffFileValidator {
     private TariffFileValidator() {
     }
 
-    public static boolean isValid(String filePath) throws SAXException, IOException {
-        URL fileUrl = TariffFileReader.class
-                .getClassLoader()
-                .getResource(filePath);
-        if (fileUrl == null) {
-            log.log(Level.ERROR, "Incorrect filepath: {}", filePath);
-            return false;
-        }
-
-        File file = new File(fileUrl.getFile());
+    public static boolean isValid(File file) {
         StreamSource source = new StreamSource(file);
 
         SchemaFactory factory = SchemaFactory.newDefaultInstance();
-        Schema schema = factory.newSchema(getXSD());
-        Validator validator = schema.newValidator();
-        validator.validate(source);
+        try {
+            Schema schema = factory.newSchema(getXSD());
+            Validator validator = schema.newValidator();
+            validator.validate(source);
+        } catch (SAXException | IOException e) {
+            log.log(Level.ERROR, "File {} is invalid (schema: {})", file.getAbsolutePath(), XSD_PATH);
+            return false;
+        }
 
-        log.log(Level.INFO, "File {} is valid", fileUrl.getPath());
+        log.log(Level.INFO, "File {} is valid", file.getAbsolutePath());
         return true;
     }
 

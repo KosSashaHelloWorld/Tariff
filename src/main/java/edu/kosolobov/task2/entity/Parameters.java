@@ -28,6 +28,14 @@ public class Parameters {
         }
     }
 
+    public float getTarification() {
+        return tarification;
+    }
+
+    public List<String> getFavoriteNumbers() {
+        return favoriteNumbers;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

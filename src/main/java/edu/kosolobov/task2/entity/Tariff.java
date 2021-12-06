@@ -58,6 +58,66 @@ public class Tariff {
         log.log(Level.INFO, "{} was created", this);
     }
 
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPayroll() {
+        return payroll;
+    }
+
+    public double getInternet1MBPrice() {
+        return internet1MBPrice;
+    }
+
+    public double getInsideCallPrice() {
+        return insideCallPrice;
+    }
+
+    public double getOutsideCallPrice() {
+        return outsideCallPrice;
+    }
+
+    public double getFavoriteCallPrice() {
+        return favoriteCallPrice;
+    }
+
+    public double getHomeCallPrice() {
+        return homeCallPrice;
+    }
+
+    public double getSmsPrice() {
+        return smsPrice;
+    }
+
+    public double getRoamingCallPrice() {
+        return roamingCallPrice;
+    }
+
+    public double getRoamingSmsPrice() {
+        return roamingSmsPrice;
+    }
+
+    public Operator getOperator() {
+        return operator;
+    }
+
+    public Parameters getParameters() {
+        return parameters;
+    }
+
     @Override
     public int hashCode() {
         double prime = 4.2;

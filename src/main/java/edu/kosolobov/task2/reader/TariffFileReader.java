@@ -3,10 +3,8 @@ package edu.kosolobov.task2.reader;
 import edu.kosolobov.task2.validator.TariffFileValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.xml.sax.SAXException;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 
 public class TariffFileReader {
@@ -16,13 +14,17 @@ public class TariffFileReader {
         super();
     }
 
-    public File read(String filePath) throws IOException, SAXException {
-        TariffFileValidator.isValid(filePath);
-
+    public File read(String filePath) {
         URL fileUrl = TariffFileReader.class
                 .getClassLoader()
                 .getResource(filePath);
 
-        return new File(fileUrl.getPath());
+        File file = new File(fileUrl.getFile());
+
+        if (TariffFileValidator.isValid(file)) {
+            return file;
+        } else {
+            return null;
+        }
     }
 }
