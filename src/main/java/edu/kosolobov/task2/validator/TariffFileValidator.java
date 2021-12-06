@@ -28,9 +28,6 @@ public class TariffFileValidator {
         if (fileUrl == null) {
             log.log(Level.ERROR, "Incorrect filepath: {}", filePath);
             return false;
-        } else if (fileUrl.getFile() == null) {
-            log.log(Level.ERROR, "File {} does not exist", filePath);
-            return false;
         }
 
         File file = new File(fileUrl.getFile());
@@ -50,10 +47,10 @@ public class TariffFileValidator {
                 .getClassLoader()
                 .getResource(XSD_PATH);
         if (fileUrl == null) {
-            log.log(Level.FATAL, "Invalid filepath to XSD: {}", XSD_PATH);
+            log.log(Level.ERROR, "Invalid filepath to XSD: {}", XSD_PATH);
             return null;
         } else if (fileUrl.getFile() == null) {
-            log.log(Level.FATAL, "XSD {} does not exist", XSD_PATH);
+            log.log(Level.ERROR, "XSD {} does not exist", XSD_PATH);
             return null;
         }
 

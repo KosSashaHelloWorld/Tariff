@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static edu.kosolobov.task2.parser.TariffConstants.*;
+
 public class TariffDOMParser {
     private static final Logger log = LogManager.getLogger(TariffDOMParser.class);
 
@@ -38,44 +40,44 @@ public class TariffDOMParser {
         for (int i = 0; i < tariffNodes.getLength(); i++) {
             if (tariffNodes.item(i) instanceof Element element && element.getTagName().equals("tariff")) {
                 TariffBuilder builder = TariffBuilder.newInstance();
-                builder.id(element.getAttribute("id"));
-                builder.startDate(element.getAttribute("start"));
-                builder.endDate(element.getAttribute("end"));
+                builder.id(element.getAttribute(ID_ATTRIBUTE));
+                builder.startDate(element.getAttribute(START_ATTRIBUTE));
+                builder.endDate(element.getAttribute(END_ATTRIBUTE));
                 NodeList items = element.getChildNodes();
                 for (int j = 0; j < items.getLength(); j++) {
-                    if (items.item(j) instanceof  Element item) {
+                    if (items.item(j) instanceof Element item) {
                         String value = item.getTextContent();
                         switch (item.getTagName()) {
-                            case "tariff-name" -> builder.tariffName(value);
-                            case "payroll" -> builder.payroll(Float.parseFloat(value));
-                            case "internet-1mb-price" -> builder.internet1MBPrice(Float.parseFloat(value));
-                            case "inside-call-price" -> builder.insideCallPrice(Float.parseFloat(value));
-                            case "outside-call-price" -> builder.outsideCallPrice(Float.parseFloat(value));
-                            case "favorite-call-price" -> builder.favoriteCallPrice(Float.parseFloat(value));
-                            case "home-call-price" -> builder.homeCallPrice(Float.parseFloat(value));
-                            case "sms-price" -> builder.smsPrice(Float.parseFloat(value));
-                            case "roaming-call-price" -> builder.roamingCallPrice(Float.parseFloat(value));
-                            case "roaming-sms-price" -> builder.roamingSmsPrice(Float.parseFloat(value));
-                            case "parameters" -> {
+                            case TARIFF_NAME -> builder.tariffName(value);
+                            case PAYROLL -> builder.payroll(Float.parseFloat(value));
+                            case INTERNET -> builder.internet1MBPrice(Float.parseFloat(value));
+                            case INSIDE_CALL -> builder.insideCallPrice(Float.parseFloat(value));
+                            case OUTSIDE_CALL -> builder.outsideCallPrice(Float.parseFloat(value));
+                            case FAVORITE_CALL -> builder.favoriteCallPrice(Float.parseFloat(value));
+                            case HOME_CALL -> builder.homeCallPrice(Float.parseFloat(value));
+                            case SMS -> builder.smsPrice(Float.parseFloat(value));
+                            case ROAMING_CALL -> builder.roamingCallPrice(Float.parseFloat(value));
+                            case ROAMING_SMS -> builder.roamingSmsPrice(Float.parseFloat(value));
+                            case PARAMETERS -> {
                                 NodeList parameters = item.getChildNodes();
                                 for (int k = 0; k < parameters.getLength(); k++) {
                                     if (parameters.item(k) instanceof Element parameter) {
                                         value = parameter.getTextContent();
                                         switch (parameter.getTagName()) {
-                                            case "tarification_minutes" -> builder.tariffication(Float.parseFloat(value));
-                                            case "favorite_number" -> builder.favoriteNumber(value);
+                                            case TARIFICATION -> builder.tariffication(Float.parseFloat(value));
+                                            case FAVORITE_NUMBER -> builder.favoriteNumber(value);
                                         }
                                     }
                                 }
                             }
-                            case "operator" -> {
+                            case OPERATOR -> {
                                 NodeList parameters = item.getChildNodes();
                                 for (int k = 0; k < parameters.getLength(); k++) {
                                     if (parameters.item(k) instanceof Element parameter) {
                                         value = parameter.getTextContent();
                                         switch (parameter.getTagName()) {
-                                            case "operator-name" -> builder.operatorName(value);
-                                            case "country" -> builder.country(value);
+                                            case OPERATOR_NAME -> builder.operatorName(value);
+                                            case COUNTRY -> builder.country(value);
                                         }
                                     }
                                 }

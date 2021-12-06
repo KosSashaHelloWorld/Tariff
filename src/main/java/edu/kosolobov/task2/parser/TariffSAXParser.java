@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static edu.kosolobov.task2.parser.TariffConstants.*;
+
 public class TariffSAXParser {
 
     public TariffSAXParser() {
@@ -39,17 +41,17 @@ public class TariffSAXParser {
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes) {
             current = qName;
-            if (current.equals("tariff")) {
+            if (current.equals(TARIFF_ELEMENT)) {
                 TariffBuilder builder = TariffBuilder.newInstance();
-                builder.id(attributes.getValue("id"));
-                builder.startDate(attributes.getValue("start"));
-                builder.endDate(attributes.getValue("end"));
+                builder.id(attributes.getValue(ID_ATTRIBUTE));
+                builder.startDate(attributes.getValue(START_ATTRIBUTE));
+                builder.endDate(attributes.getValue(END_ATTRIBUTE));
             }
         }
 
         @Override
         public void endElement(String uri, String localName, String qName) {
-            if (qName.equals("tariff")) {
+            if (qName.equals(TARIFF_ELEMENT)) {
                 TariffBuilder builder = TariffBuilder.getInstance();
                 tariffs.add(builder.build());
             }
@@ -63,20 +65,20 @@ public class TariffSAXParser {
 
             if (!value.isEmpty()) {
                 switch (current) {
-                    case "tariff-name" -> builder.tariffName(value);
-                    case "payroll" -> builder.payroll(Float.parseFloat(value));
-                    case "internet-1mb-price" -> builder.internet1MBPrice(Float.parseFloat(value));
-                    case "inside-call-price" -> builder.insideCallPrice(Float.parseFloat(value));
-                    case "outside-call-price" -> builder.outsideCallPrice(Float.parseFloat(value));
-                    case "favorite-call-price" -> builder.favoriteCallPrice(Float.parseFloat(value));
-                    case "home-call-price" -> builder.homeCallPrice(Float.parseFloat(value));
-                    case "sms-price" -> builder.smsPrice(Float.parseFloat(value));
-                    case "roaming-call-price" -> builder.roamingCallPrice(Float.parseFloat(value));
-                    case "roaming-sms-price" -> builder.roamingSmsPrice(Float.parseFloat(value));
-                    case "tarification_minutes" -> builder.tariffication(Float.parseFloat(value));
-                    case "favorite_number" -> builder.favoriteNumber(value);
-                    case "operator-name" -> builder.operatorName(value);
-                    case "country" -> builder.country(value);
+                    case TARIFF_NAME -> builder.tariffName(value);
+                    case PAYROLL -> builder.payroll(Float.parseFloat(value));
+                    case INTERNET -> builder.internet1MBPrice(Float.parseFloat(value));
+                    case INSIDE_CALL -> builder.insideCallPrice(Float.parseFloat(value));
+                    case OUTSIDE_CALL -> builder.outsideCallPrice(Float.parseFloat(value));
+                    case FAVORITE_CALL -> builder.favoriteCallPrice(Float.parseFloat(value));
+                    case HOME_CALL -> builder.homeCallPrice(Float.parseFloat(value));
+                    case SMS -> builder.smsPrice(Float.parseFloat(value));
+                    case ROAMING_CALL -> builder.roamingCallPrice(Float.parseFloat(value));
+                    case ROAMING_SMS -> builder.roamingSmsPrice(Float.parseFloat(value));
+                    case TARIFICATION -> builder.tariffication(Float.parseFloat(value));
+                    case FAVORITE_NUMBER -> builder.favoriteNumber(value);
+                    case OPERATOR_NAME -> builder.operatorName(value);
+                    case COUNTRY -> builder.country(value);
                 }
             }
         }

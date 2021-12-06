@@ -17,6 +17,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static edu.kosolobov.task2.parser.TariffConstants.*;
+
 public class TariffStAXParser {
 
     public List<Tariff> parse(File file) throws FileNotFoundException, XMLStreamException {
@@ -38,85 +40,85 @@ public class TariffStAXParser {
                 String tagName = startElement.getName().getLocalPart();
 
                 switch (tagName) {
-                    case "tariff" -> {
+                    case TARIFF_ELEMENT -> {
                         builder = TariffBuilder.newInstance();
                         builder.startDate(startElement.getAttributeByName(new QName("start")).getValue());
                         builder.endDate(startElement.getAttributeByName(new QName("end")).getValue());
                         builder.id(startElement.getAttributeByName(new QName("id")).getValue());
                     }
-                    case "tariff-name" -> {
+                    case TARIFF_NAME -> {
                         event = reader.nextEvent();
                         String value = event.asCharacters().getData();
                         builder.tariffName(value);
                         break;
                     }
-                    case "internet-1mb-price" -> {
+                    case PAYROLL -> {
                         event = reader.nextEvent();
                         String value = event.asCharacters().getData();
                         builder.payroll(Float.parseFloat(value));
                         break;
                     }
-                    case "inside-call-price" -> {
+                    case INSIDE_CALL -> {
                         event = reader.nextEvent();
                         String value = event.asCharacters().getData();
                         builder.insideCallPrice(Float.parseFloat(value));
                         break;
                     }
-                    case "outside-call-price" -> {
+                    case OUTSIDE_CALL -> {
                         event = reader.nextEvent();
                         String value = event.asCharacters().getData();
                         builder.outsideCallPrice(Float.parseFloat(value));
                         break;
                     }
-                    case "favorite-call-price" -> {
+                    case FAVORITE_CALL -> {
                         event = reader.nextEvent();
                         String value = event.asCharacters().getData();
                         builder.favoriteCallPrice(Float.parseFloat(value));
                         break;
                     }
-                    case "home-call-price" -> {
+                    case HOME_CALL -> {
                         event = reader.nextEvent();
                         String value = event.asCharacters().getData();
                         builder.homeCallPrice(Float.parseFloat(value));
                         break;
                     }
-                    case "sms-price" -> {
+                    case SMS -> {
                         event = reader.nextEvent();
                         String value = event.asCharacters().getData();
                         builder.smsPrice(Float.parseFloat(value));
                         break;
                     }
-                    case "roaming-call-price" -> {
+                    case ROAMING_CALL -> {
                         event = reader.nextEvent();
                         String value = event.asCharacters().getData();
                         builder.roamingCallPrice(Float.parseFloat(value));
                         break;
                     }
-                    case "roaming-sms-price" -> {
+                    case ROAMING_SMS -> {
                         event = reader.nextEvent();
                         String value = event.asCharacters().getData();
                         builder.roamingSmsPrice(Float.parseFloat(value));
                         break;
                     }
-                    case "tarification_minutes" -> {
+                    case TARIFICATION -> {
                         event = reader.nextEvent();
                         String value = event.asCharacters().getData();
                         builder.tariffication(Float.parseFloat(value));
                         break;
                     }
-                    case "favorite_number" -> {
+                    case FAVORITE_NUMBER -> {
                         event = reader.nextEvent();
                         String value = event.asCharacters().getData();
                         builder.favoriteNumber(value);
                         break;
                     }
-                    case "operator-name" -> {
+                    case OPERATOR_NAME -> {
                         event = reader.nextEvent();
                         String value = event.asCharacters().getData();
                         builder.operatorName(value);
                         break;
                     }
-                    case "country" -> {
+                    case COUNTRY -> {
                         event = reader.nextEvent();
                         String value = event.asCharacters().getData();
                         builder.country(value);
@@ -126,7 +128,7 @@ public class TariffStAXParser {
             }
             if (event.isEndElement()) {
                 EndElement endElement = event.asEndElement();
-                if (endElement.getName().getLocalPart().equals("tariff")) {
+                if (endElement.getName().getLocalPart().equals(TARIFF_ELEMENT)) {
                     TariffBuilder builder = TariffBuilder.getInstance();
                     tariffs.add(builder.build());
                 }
